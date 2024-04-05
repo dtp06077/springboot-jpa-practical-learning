@@ -33,4 +33,24 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status; //주문 상태 [ORDER, CANCEL]
+
+    //==연관관계 메서드==//
+
+    //다대일 관계인 회원 엔티티를 지정하면 해당 회원 주문에 주문 추가
+    public void setMember(Member member) {
+        this.member = member;
+        member.getOrders().add(this);
+    }
+
+    //일대다 관계인 주문 물품 엔티티를 추가하면 해당 물품을 이 주문으로 수정
+    public void addOrderItem(OrderItem orderItem) {
+        orderItems.add(orderItem);
+        orderItem.setOrder(this);
+    }
+
+    //일대일 관계인 배송 엔티티를 지정하면 해당 배송 주문 변경
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+        delivery.setOrder(this);
+    }
 }
