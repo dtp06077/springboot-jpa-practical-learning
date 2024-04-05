@@ -17,14 +17,15 @@ public class Order {
     @Column(name = "order_id") //기본키
     private Long id;
 
-    @ManyToOne //다대일 관계
+    //LAZY로 설정하지 않으면 n+1 쿼리 에러 발생
+    @ManyToOne(fetch = FetchType.LAZY) //다대일 관계
     @JoinColumn(name = "member_id") //외래키
     private Member member; //주문 회원
 
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems=new ArrayList<>(); //주문 물품
 
-    @OneToOne//일대일 관계
+    @OneToOne(fetch = FetchType.LAZY)//일대일 관계
     @JoinColumn(name = "delivery_id")//외래키
     private Delivery delivery; //배송 정보
 

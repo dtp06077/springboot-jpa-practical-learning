@@ -14,11 +14,11 @@ public class OrderItem {
     @Column(name = "order_item_id")
     private Long id;
 
-    @ManyToOne //다대일 관계
+    @ManyToOne(fetch = FetchType.LAZY) //다대일 관계
     @JoinColumn(name = "order_id")
     private Order order;
 
-    @ManyToOne //다대일 관계
+    @ManyToOne(fetch = FetchType.LAZY) //다대일 관계
     @JoinColumn(name = "item_id")
     private Item item;
 
