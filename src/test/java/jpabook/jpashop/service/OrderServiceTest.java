@@ -8,6 +8,7 @@ import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.domain.item.Book;
 import jpabook.jpashop.domain.item.Item;
+import jpabook.jpashop.exception.NotEnoughStockException;
 import jpabook.jpashop.repository.OrderRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -74,6 +75,26 @@ class OrderServiceTest {
         assertEquals(OrderStatus.CANCEL, order.getStatus());
         //==주문이 취소된 상품은 그만큼 재고가 증가해야 한다==//
         assertEquals(10,item.getStockQuantity());
+    }
+
+    @Test
+    @DisplayName("재고 수량 초과")
+    public void 재고수량초과() {
+        //Given
+        Member member = createMember();
+        Item item = createBook("spring JPA", 30000, 5);
+        int orderCount = 10;
+
+        //When
+        try {
+            //재고보다 많은 수량으로 예외가 발생해야 함.
+            orderService.order(member.getId(), item.getId(), orderCount);
+        } catch (NotEnoughStockException e) {
+            return;
+        }
+
+        //Then
+        fail("재고 수량 부족 예외가 발생해야 한다.");
     }
     //==중복되는 회원, 아이템 생성 코드 만들어놓기==//
     private Member createMember() {
