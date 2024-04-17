@@ -72,4 +72,22 @@ public class ItemController {
         return "items/updateItemForm";
     }
 
+    /**
+     * 상품 수정
+     */
+    @PostMapping(value = "/items/{itemId}/edit")
+    public String updateItem(@PathVariable("itemId") Long itemId, BookForm form) {
+        Book book = new Book();
+
+        book.setId(form.getId());
+        book.setName(form.getName());
+        book.setPrice(form.getPrice());
+        book.setStockQuantity(form.getStockQuantity());
+        book.setAuthor(form.getAuthor());
+        book.setIsbn(form.getIsbn());
+
+        itemService.saveItem(book);
+
+        return "redirect:/items";
+    }
 }
