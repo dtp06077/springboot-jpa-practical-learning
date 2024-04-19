@@ -25,10 +25,12 @@ public class Order {
     @JoinColumn(name = "member_id") //외래키
     private Member member; //주문 회원
 
-    @OneToMany(mappedBy = "order")
+    //cascade 추가
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems=new ArrayList<>(); //주문 물품
 
-    @OneToOne(fetch = FetchType.LAZY)//일대일 관계
+    //cascade 추가
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)//일대일 관계
     @JoinColumn(name = "delivery_id")//외래키
     private Delivery delivery; //배송 정보
 
