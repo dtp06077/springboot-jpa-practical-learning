@@ -74,20 +74,13 @@ public class ItemController {
 
     /**
      * 상품 수정
+     * 수정을 시도하는 Book 객체는 준영속 엔티티
+     * 병합(merge)를 사용하는 것 보단 변경 감지 기능을 사용
      */
     @PostMapping(value = "/items/{itemId}/edit")
     public String updateItem(@PathVariable("itemId") Long itemId, BookForm form) {
-        Book book = new Book();
-
-        book.setId(form.getId());
-        book.setName(form.getName());
-        book.setPrice(form.getPrice());
-        book.setStockQuantity(form.getStockQuantity());
-        book.setAuthor(form.getAuthor());
-        book.setIsbn(form.getIsbn());
-
-        itemService.saveItem(book);
-
+        itemService.updateItem(itemId, form.getName(), form.getPrice(),
+                form.getStockQuantity(), form.getAuthor(), form.getIsbn());
         return "redirect:/items";
     }
 }
