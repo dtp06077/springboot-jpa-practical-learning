@@ -25,6 +25,16 @@ public class MemberService {
         memberRepository.save(member);
         return member.getId();
     }
+
+    /**
+     * 회원 이름 수정
+     */
+    @Transactional
+    public void update(Long id, String name) {
+        Member member = memberRepository.findOne(id);
+        //변경 감지
+        member.setName(name);
+    }
     //중복 회원 검증 메서드
     private void validateDuplicateMember(Member member) {
         //이름으로 중복 회원을 검증하면 동명이인은 어떤 로직으로 처리할지
